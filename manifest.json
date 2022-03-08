@@ -1,0 +1,26 @@
+{
+	"manifest_version": 3,
+	"name": "Eurofotbal Jump Comments",
+	"version": "0.1",
+
+	"description": "Klávesové zkratky ke komentářům na Eurofotbal.cz. Aktivní klávesy Q, W, E, R, A, S, D, F.",
+
+	"content_scripts": [
+		{
+			"matches": ["https://*.eurofotbal.cz/*"],
+			"js": ["jump-script.js"]
+		}
+	],
+
+	"web_accessible_resources": [
+		{
+			"resources": ["JumpComments.css"],
+			"matches": ["*://*.eurofotbal.cz/*"]
+		}
+	],
+
+	"icons": {
+		"48": "/assets/icons/48px.png",
+		"128": "/assets/icons/128px.png"
+	}
+}

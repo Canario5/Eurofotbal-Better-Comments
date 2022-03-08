@@ -1,0 +1,14 @@
+@keyframes blink {
+	0% {
+		/* background-color: #fff; */
+	}
+
+	100% {
+		background-color: #fc7979;
+		opacity: 0.8;
+	}
+}
+
+.stopBlink {
+	animation: blink 0.75s ease-in-out 3;
+}
