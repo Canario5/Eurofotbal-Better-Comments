@@ -9,6 +9,6 @@
 	}
 }
 
-.stopBlink {
+.BlinkBlink {
 	animation: blink 0.75s ease-in-out 3;
 }

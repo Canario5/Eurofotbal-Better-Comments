@@ -21,50 +21,54 @@ const lastUnread = unreadComments[unreadComments.length - 1]
 
 const jumpScroll = (nextUnread) => {
 	for (let i = 0; i < unreadComments.length; i++) {
-		if (unreadComments[i] > currentPosition) {
-			if (nextUnread === true) {
-				currentPosition = unreadComments[i]
+		if (!(unreadComments[i] > currentPosition)) continue
+
+		if (nextUnread === true) {
+			return miniScroll(unreadComments[i])
+		}
+
+		if (nextUnread === false) {
+			if (currentPosition === unreadComments[i - 1]) {
+				return miniScroll(unreadComments[i - 2])
 			}
 
-			if (nextUnread === false) {
-				if (currentPosition === unreadComments[i - 1]) {
-					currentPosition = unreadComments[i - 2]
-				} else {
-					currentPosition = unreadComments[i - 1]
-				}
-			}
-
-			break
+			return miniScroll(unreadComments[i - 1])
 		}
 	}
 }
 
-const miniScroll = () => {
-	/* console.log(`CurrentPosition is ${currentPosition}`) */
+const miniScroll = (position, blinking) => {
+	if (position || position === 0) {
+		currentPosition = position
+	}
+
+	if (blinking) blinkingBg()
+
+	console.log(`CurrentPosition is ${currentPosition}`)
 	allComments[currentPosition].scrollIntoView({ behavior: "smooth" })
 }
 
-const bigScroll = (jumpSize) => {
+const posChange = (jumpSize) => {
 	if (currentPosition === "") {
-		currentPosition = 0
+		return miniScroll(0)
 	}
-	if (jumpSize < 0) {
-		if (currentPosition < Math.abs(jumpSize)) {
-			currentPosition = 0
-			blinkingBg()
-		} else if (currentPosition > 0) {
-			currentPosition += jumpSize
-		}
+	// Negative jumpSize; Down -> comments
+	if (jumpSize < 0 && currentPosition < Math.abs(jumpSize)) {
+		return miniScroll(0, true)
 	}
-	if (jumpSize > 0) {
-		if (currentPosition > commentsTotal - (1 + jumpSize)) {
-			currentPosition = commentsTotal - 1
-			blinkingBg()
-		} else if (currentPosition < commentsTotal - 1) {
-			currentPosition += jumpSize
-		}
+
+	if (jumpSize < 0 && currentPosition > 0) {
+		return miniScroll((currentPosition += jumpSize))
 	}
-	miniScroll()
+
+	// Positive jumpSize; Up -> comments
+	if (jumpSize > 0 && currentPosition > commentsTotal - (1 + jumpSize)) {
+		return miniScroll(commentsTotal - 1, true)
+	}
+
+	if (jumpSize > 0 && currentPosition < commentsTotal - 1) {
+		return miniScroll((currentPosition += jumpSize))
+	}
 }
 
 const elementScroll = (selectorDummy) => {
@@ -73,10 +77,11 @@ const elementScroll = (selectorDummy) => {
 }
 
 const blinkingBg = () => {
-	allComments[currentPosition].addEventListener("animationend", () => {
-		allComments[currentPosition].classList.remove("stopBlink")
-	})
-	allComments[currentPosition].classList.add("stopBlink")
+	const oldPos = allComments[currentPosition]
+	oldPos.onanimationend = () => {
+		oldPos.classList.remove("BlinkBlink")
+	}
+	allComments[currentPosition].classList.add("BlinkBlink")
 }
 
 document.addEventListener("keyup", (e) => {
@@ -85,62 +90,58 @@ document.addEventListener("keyup", (e) => {
 	}
 	if (e.code === "KeyQ") {
 		//* Q letter "UP +1" comment
-		bigScroll(-1)
+		return posChange(-1)
 	}
 	if (e.code === "KeyA") {
 		//* A letter "DOWN +1" comment
-		bigScroll(1)
+		return posChange(1)
 	}
 	if (e.code === "KeyW") {
 		//* W letter "UP +5" comments
-		bigScroll(-5)
+		return posChange(-5)
 	}
 	if (e.code === "KeyS") {
 		//* S letter "DOWN +5" comments
-		bigScroll(5)
+		return posChange(5)
 	}
 	if (e.code === "KeyE") {
 		//* E letter "previous unread" comment
 		if (currentPosition === "") {
 			if (unreadComments.length) {
-				currentPosition = lastUnread
-			} else {
-				currentPosition = 0
-				blinkingBg()
+				return miniScroll(lastUnread)
 			}
-		} else if (currentPosition > unreadComments[0] && currentPosition < lastUnread) {
-			jumpScroll(false)
-		} else if (currentPosition > lastUnread) {
-			currentPosition = lastUnread
-		} else if (currentPosition === lastUnread && unreadComments.length >= 2) {
-			currentPosition = unreadComments[unreadComments.length - 2]
-		} else {
-			blinkingBg()
+			return miniScroll(0, true)
 		}
-		miniScroll()
+		if (currentPosition > unreadComments[0] && currentPosition < lastUnread) {
+			return jumpScroll(false)
+		}
+		if (currentPosition > lastUnread) {
+			return miniScroll(lastUnread)
+		}
+		if (currentPosition === lastUnread && unreadComments.length >= 2) {
+			return miniScroll(unreadComments[unreadComments.length - 2])
+		}
+		return blinkingBg()
 	}
 	if (e.code === "KeyD") {
 		//* D letter "next unread" comment
 		if (currentPosition === "") {
 			if (unreadComments.length) {
-				currentPosition = unreadComments[0]
-			} else {
-				currentPosition = 0
-				blinkingBg()
+				return miniScroll(unreadComments[0])
 			}
-		} else if (currentPosition < lastUnread && unreadComments.length) {
-			jumpScroll(true)
-		} else {
-			blinkingBg()
+			return miniScroll(0, true)
 		}
-		miniScroll()
+		if (currentPosition < lastUnread && unreadComments.length) {
+			return jumpScroll(true)
+		}
+		return blinkingBg()
 	}
 	if (e.code === "KeyR") {
 		//* R letter scroll at the start of the article
-		elementScroll(".article")
+		return elementScroll(".article")
 	}
 	if (e.code === "KeyF") {
-		//* rovnou k psaní nového komentu
-		elementScroll(".content.newpost")
+		//* F letter to the comment box
+		return elementScroll(".content.newpost")
 	}
 })
