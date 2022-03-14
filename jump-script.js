@@ -23,9 +23,7 @@ const jumpScroll = (nextUnread) => {
 	for (let i = 0; i < unreadComments.length; i++) {
 		if (!(unreadComments[i] > currentPosition)) continue
 
-		if (nextUnread === true) {
-			return miniScroll(unreadComments[i])
-		}
+		if (nextUnread === true) return miniScroll(unreadComments[i])
 
 		if (nextUnread === false) {
 			if (currentPosition === unreadComments[i - 1]) {
@@ -49,26 +47,18 @@ const miniScroll = (position, blinking) => {
 }
 
 const posChange = (jumpSize) => {
-	if (currentPosition === "") {
-		return miniScroll(0)
-	}
-	// Negative jumpSize; Down -> comments
-	if (jumpSize < 0 && currentPosition < Math.abs(jumpSize)) {
-		return miniScroll(0, true)
-	}
+	if (currentPosition === "") return miniScroll(0)
 
-	if (jumpSize < 0 && currentPosition > 0) {
-		return miniScroll((currentPosition += jumpSize))
-	}
+	// Negative jumpSize; Previous, climbing to the top -> comments
+	if (jumpSize < 0 && currentPosition < Math.abs(jumpSize)) return miniScroll(0, true)
 
-	// Positive jumpSize; Up -> comments
-	if (jumpSize > 0 && currentPosition > commentsTotal - (1 + jumpSize)) {
-		return miniScroll(commentsTotal - 1, true)
-	}
+	if (jumpSize < 0 && currentPosition > 0) return miniScroll((currentPosition += jumpSize))
 
-	if (jumpSize > 0 && currentPosition < commentsTotal - 1) {
-		return miniScroll((currentPosition += jumpSize))
-	}
+	// Positive jumpSize; Next, sliding to the bottom -> comments
+	// prettier-ignore
+	if (jumpSize > 0 && currentPosition > commentsTotal - (1 + jumpSize)) return miniScroll(commentsTotal - 1, true)
+	// prettier-ignore
+	if (jumpSize > 0 && currentPosition < commentsTotal - 1) return miniScroll((currentPosition += jumpSize))
 }
 
 const elementScroll = (selectorDummy) => {
