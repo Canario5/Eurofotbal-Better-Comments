@@ -10,8 +10,6 @@ const allComments = document.querySelectorAll(".post")
 const commentsTotal = allComments.length
 const unreadComments = []
 let currentPosition = ""
-//let unreadPrev = ""
-//let unreadNext = ""
 
 for (let i = 0; i < commentsTotal; i++)
 	if (allComments[i].className.includes("unread")) {
@@ -23,14 +21,14 @@ const jumpScroll = (nextUnread) => {
 	for (let i = 0; i < unreadComments.length; i++) {
 		if (!(unreadComments[i] > currentPosition)) continue
 
-		if (nextUnread === true) return miniScroll(unreadComments[i])
+		if (nextUnread === true) return elementScroll(unreadComments[i])
 
 		if (nextUnread === false) {
 			if (currentPosition === unreadComments[i - 1]) {
-				return miniScroll(unreadComments[i - 2])
+				return elementScroll(unreadComments[i - 2])
 			}
 
-			return miniScroll(unreadComments[i - 1])
+			return elementScroll(unreadComments[i - 1])
 		}
 	}
 }
@@ -61,7 +59,7 @@ const posChange = (jumpSize) => {
 	if (jumpSize > 0 && currentPosition < commentsTotal - 1) return miniScroll((currentPosition += jumpSize))
 }
 
-const letterE = () => {
+const unreadPrev = () => {
 	//* E letter "previous unread" comment
 	if (currentPosition === "") {
 		if (unreadComments.length) {
@@ -81,7 +79,7 @@ const letterE = () => {
 	blinkingBg()
 }
 
-const letterD = () => {
+const unreadNext = () => {
 	//* D letter "next unread" comment
 	if (currentPosition === "") {
 		if (unreadComments.length) {
@@ -96,7 +94,17 @@ const letterD = () => {
 }
 
 const elementScroll = (selectorDummy) => {
-	const elementTarget = document.querySelector(selectorDummy)
+	let elementTarget
+	if (Number.isInteger(selectorDummy)) {
+		console.log("cislovani")
+		elementTarget = document.querySelector(allComments[selectorDummy])
+	}
+	if (selectorDummy instanceof Element) {
+		console.log("nodovani")
+		elementTarget = selectorDummy
+	}
+
+	console.log(`CurrentPosition is ${currentPosition}`)
 	elementTarget.scrollIntoView({ behavior: "smooth" })
 }
 
@@ -108,23 +116,41 @@ const blinkingBg = () => {
 	allComments[currentPosition].classList.add("BlinkBlink")
 }
 
+const parentJump = () => {
+	if (
+		!allComments[currentPosition] ||
+		!allComments[currentPosition].querySelector(".parentlink")
+	) {
+		return
+	}
+
+	let parentId = allComments[currentPosition]
+		.querySelector(".parentlink > [onclick]")
+		.getAttribute("onclick")
+
+	parentId = parentId.replace(/(\D+)/g, "") // Remove everything except numbers
+	elementScroll(document.getElementById(`p${parentId}`))
+	/* document.getElementById(`p${parentId}`).scrollIntoView({ behavior: "smooth" }) */
+}
+
 const dict = new Map()
 dict.set("KeyQ", () => posChange(-1)) //* Q letter "UP +1" comment
 dict.set("KeyA", () => posChange(1)) //* A letter "DOWN +1" comment
 dict.set("KeyW", () => posChange(-5)) //* W letter "UP +5" comments
 dict.set("KeyS", () => posChange(5)) //* S letter "DOWN +5" comments
-dict.set("KeyE", () => letterE()) //* E letter "previous unread" comment
-dict.set("KeyD", () => letterD()) //* D letter "next unread" comment
-dict.set("KeyR", () => elementScroll(".article")) //* R letter scroll at the start of the article
-dict.set("KeyF", () => elementScroll(".content.newpost")) //* F letter to the comment box
+dict.set("KeyE", () => unreadPrev()) //* E letter "previous unread" comment
+dict.set("KeyD", () => unreadNext()) //* D letter "next unread" comment
+dict.set("KeyR", () => parentJump()) //* R letter
+dict.set("KeyF", () => elementScroll(".content.newpost")) //* F letter
+dict.set("Digit2", () => elementScroll(".article")) //* 2 letter scroll at the start of the article
+dict.set("KeyX", () => elementScroll(".content.newpost")) //* F letter to the comment box
 
 document.addEventListener("keyup", (e) => {
 	if (!commentsTotal) return
 
-	for (const [key, value] of dict.entries()) {
+	for (const [key, value] of dict) {
 		if (e.code === key) {
 			return value()
-
 			/* dict.get("KeyS")() */
 		}
 	}
