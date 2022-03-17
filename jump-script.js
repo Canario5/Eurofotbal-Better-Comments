@@ -21,14 +21,14 @@ const jumpScroll = (nextUnread) => {
 	for (let i = 0; i < unreadComments.length; i++) {
 		if (!(unreadComments[i] > currentPosition)) continue
 
-		if (nextUnread === true) return elementScroll(unreadComments[i])
+		if (nextUnread === true) return miniScroll(unreadComments[i])
 
 		if (nextUnread === false) {
 			if (currentPosition === unreadComments[i - 1]) {
-				return elementScroll(unreadComments[i - 2])
+				return miniScroll(unreadComments[i - 2])
 			}
 
-			return elementScroll(unreadComments[i - 1])
+			return miniScroll(unreadComments[i - 1])
 		}
 	}
 }
@@ -60,7 +60,6 @@ const posChange = (jumpSize) => {
 }
 
 const unreadPrev = () => {
-	//* E letter "previous unread" comment
 	if (currentPosition === "") {
 		if (unreadComments.length) {
 			return miniScroll(lastUnread)
@@ -68,7 +67,7 @@ const unreadPrev = () => {
 		return miniScroll(0, true)
 	}
 	if (currentPosition > unreadComments[0] && currentPosition < lastUnread) {
-		return jumpScroll(false)
+		return miniScroll(false)
 	}
 	if (currentPosition > lastUnread) {
 		return miniScroll(lastUnread)
@@ -80,7 +79,6 @@ const unreadPrev = () => {
 }
 
 const unreadNext = () => {
-	//* D letter "next unread" comment
 	if (currentPosition === "") {
 		if (unreadComments.length) {
 			return miniScroll(unreadComments[0])
@@ -93,18 +91,8 @@ const unreadNext = () => {
 	blinkingBg()
 }
 
-const elementScroll = (selectorDummy) => {
-	let elementTarget
-	if (Number.isInteger(selectorDummy)) {
-		console.log("cislovani")
-		elementTarget = document.querySelector(allComments[selectorDummy])
-	}
-	if (selectorDummy instanceof Element) {
-		console.log("nodovani")
-		elementTarget = selectorDummy
-	}
-
-	console.log(`CurrentPosition is ${currentPosition}`)
+const elementScroll = (targetPos, blinking) => {
+	const elementTarget = document.querySelector(selectorDummy)
 	elementTarget.scrollIntoView({ behavior: "smooth" })
 }
 
@@ -148,9 +136,10 @@ dict.set("KeyX", () => elementScroll(".content.newpost")) //* F letter to the co
 document.addEventListener("keyup", (e) => {
 	if (!commentsTotal) return
 
-	for (const [key, value] of dict) {
+	for (const [key, value] of dict.entries()) {
 		if (e.code === key) {
 			return value()
+
 			/* dict.get("KeyS")() */
 		}
 	}
