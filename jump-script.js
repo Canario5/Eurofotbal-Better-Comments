@@ -12,6 +12,8 @@ const loadCSS = () => {
 let currentPosition = ""
 
 const initComments = () => {
+	if (initComments.value && initComments.value.length > 0) return initComments.value
+
 	const allComments = document.querySelectorAll(".post")
 	const commentsTotal = allComments.length
 	const unreadComments = []
@@ -20,7 +22,9 @@ const initComments = () => {
 			unreadComments.push(i)
 		}
 
-	lastUnread()
+	initComments.value = [allComments, commentsTotal, unreadComments]
+
+	/* lastUnread() */
 }
 
 const lastUnread = () => {
