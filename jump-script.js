@@ -157,7 +157,27 @@ const parentJump = () => {
 
 	parentId = parentId.replace(/(\D+)/g, "") // Remove everything except numbers
 	/* elementScroll(document.getElementById(`p${parentId}`)) */
-	document.getElementById(`p${parentId}`).scrollIntoView({ behavior: "smooth" })
+	parentId = "p" + parentId
+
+	for (let i = 0; i < allComments.length; i++) {
+		if (allComments[i].id === parentId) {
+			const position = currentPos - (currentPos - i)
+			backToChild(position, currentPos)
+			return miniScroll(position)
+		}
+	}
+}
+
+const backToChild = (parentPos, childPos) => {
+	let currentPos = currentPosition()
+
+	if ((parentPos || parentPos === 0) && typeof parentPos === "number") {
+		backToChild.parentPos = parentPos
+		backToChild.childPos = childPos
+		return
+	}
+
+	if (backToChild.parentPos === currentPos) return miniScroll(backToChild.childPos)
 }
 
 const dict = new Map([
@@ -168,7 +188,7 @@ const dict = new Map([
 	["KeyE", () => unreadPrev()], //* E letter "previous unread" comment
 	["KeyD", () => unreadNext()], //* D letter "next unread" comment
 	["KeyR", () => parentJump()], //* R letter
-	["KeyF", () => elementScroll(".content.newpost")], //* F letter
+	["KeyF", () => backToChild()], //* F letter
 	["Digit2", () => elementScroll(".article")], //* 2 letter scroll at the start of the article
 	["KeyX", () => elementScroll(".content.newpost")], //* F letter to the comment box */
 	["KeyP", () => "test"], //* test button
@@ -179,11 +199,12 @@ document.addEventListener("keyup", (e) => {
 
 	if (!commentsTotal) return
 
+	// Key scripts doesnt run when typing text in text fields
 	if (
 		document.activeElement.tagName === "TEXTAREA" ||
 		document.activeElement.tagName === "INPUT"
 	)
-		return // Key scripts doesnt run when typing text in text fields
+		return
 
 	for (const [key, value] of dict) {
 		if (e.code === key) {
