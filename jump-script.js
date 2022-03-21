@@ -1,15 +1,13 @@
 //*CSS file loading
-const loadCSS = () => {
+;(() => {
 	const linkCSS = document.createElement("link")
 	linkCSS.type = "text/css"
 	linkCSS.href = chrome.runtime.getURL("JumpComments.css")
 	linkCSS.rel = "stylesheet"
 	document.head.append(linkCSS)
-}
+})()
 
 //*Hotkeys logic section
-
-let currentPosition = ""
 
 const initComments = () => {
 	if (initComments.value && initComments.value.length > 0) return initComments.value
@@ -22,114 +20,138 @@ const initComments = () => {
 			unreadComments.push(i)
 		}
 
-	initComments.value = [allComments, commentsTotal, unreadComments]
+	const lastUnread = unreadComments[unreadComments.length - 1]
 
-	/* lastUnread() */
+	initComments.value = [allComments, commentsTotal, unreadComments, lastUnread]
+	currentPosition()
 }
 
-const lastUnread = () => {
-	if (!lastUnread.value) lastUnread.value = unreadComments[unreadComments.length - 1] || 0
+const currentPosition = (rewrite) => {
+	if ((rewrite || rewrite === 0) && typeof rewrite === "number")
+		return (currentPosition.value = rewrite)
 
-	return lastUnread.value
+	if (!currentPosition.value && currentPosition.value !== 0) {
+		currentPosition.value = ""
+	}
+	return currentPosition.value
 }
 
 const jumpScroll = (nextUnread) => {
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
 	for (let i = 0; i < unreadComments.length; i++) {
-		if (!(unreadComments[i] > currentPosition)) continue
+		if (!(unreadComments[i] > currentPos)) continue
 
 		if (nextUnread === true) return miniScroll(unreadComments[i])
 
-		if (nextUnread === false) {
-			if (currentPosition === unreadComments[i - 1]) {
-				return miniScroll(unreadComments[i - 2])
-			}
+		if (nextUnread === false && currentPos === unreadComments[i - 1])
+			return miniScroll(unreadComments[i - 2])
 
-			return miniScroll(unreadComments[i - 1])
-		}
+		if (nextUnread === false) return miniScroll(unreadComments[i - 1])
 	}
 }
 
 const miniScroll = (position, blinking) => {
 	if (position || position === 0) {
-		currentPosition = position
+		currentPosition(position)
 	}
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
 
 	if (blinking) blinkingBg()
 
-	console.log(`CurrentPosition is ${currentPosition}`)
-	allComments[currentPosition].scrollIntoView({ behavior: "smooth" })
+	console.log(`CurrentPosition is ${currentPos}`)
+	allComments[currentPos].scrollIntoView({ behavior: "smooth" })
 }
 
 const posChange = (jumpSize) => {
-	if (currentPosition === "") return miniScroll(0)
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
+	if (currentPos === "") return miniScroll(0)
 
 	// Negative jumpSize; Previous, climbing to the top -> comments
-	if (jumpSize < 0 && currentPosition < Math.abs(jumpSize)) return miniScroll(0, true)
+	if (jumpSize < 0 && currentPos < Math.abs(jumpSize)) return miniScroll(0, true)
 
-	if (jumpSize < 0 && currentPosition > 0) return miniScroll((currentPosition += jumpSize))
+	if (jumpSize < 0 && currentPos > 0) return miniScroll((currentPos += jumpSize))
 
 	// Positive jumpSize; Next, sliding to the bottom -> comments
-	if (jumpSize > 0 && currentPosition > commentsTotal - (1 + jumpSize))
+	if (jumpSize > 0 && currentPos > commentsTotal - (1 + jumpSize))
 		return miniScroll(commentsTotal - 1, true)
 
-	if (jumpSize > 0 && currentPosition < commentsTotal - 1)
-		return miniScroll((currentPosition += jumpSize))
+	if (jumpSize > 0 && currentPos < commentsTotal - 1)
+		return miniScroll((currentPos += jumpSize))
 }
 
 const unreadPrev = () => {
-	if (currentPosition === "") {
-		if (unreadComments.length) {
-			return miniScroll(lastUnread())
-		}
-		return miniScroll(0, true)
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
+	switch (true) {
+		case currentPos === "" && unreadComments && unreadComments.length > 0:
+			/* return miniScroll(lastUnread) */
+			return miniScroll(unreadComments[0])
+
+		case currentPos === "":
+			return miniScroll(0, true)
+
+		case currentPos > unreadComments[0] && currentPos < lastUnread:
+			return jumpScroll(false)
+
+		case currentPos > lastUnread:
+			return miniScroll(lastUnread)
+
+		case currentPos === lastUnread && unreadComments.length >= 2:
+			return miniScroll(unreadComments[unreadComments.length - 2])
 	}
-	if (currentPosition > unreadComments[0] && currentPosition < lastUnread()) {
-		return jumpScroll(false)
-	}
-	if (currentPosition > lastUnread()) {
-		return miniScroll(lastUnread())
-	}
-	if (currentPosition === lastUnread() && unreadComments.length >= 2) {
-		return miniScroll(unreadComments[unreadComments.length - 2])
-	}
+
 	blinkingBg()
 }
 
 const unreadNext = () => {
-	if (currentPosition === "") {
-		if (unreadComments.length) {
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
+	switch (true) {
+		case currentPos === "" && unreadComments && unreadComments.length > 0:
 			return miniScroll(unreadComments[0])
-		}
-		return miniScroll(0, true)
+
+		case currentPos === "":
+			return miniScroll(0, true)
+
+		case currentPos < lastUnread && unreadComments.length > 0:
+			return jumpScroll(true)
 	}
-	if (currentPosition < lastUnread() && unreadComments.length) {
-		return jumpScroll(true)
-	}
+
 	blinkingBg()
 }
 
-const elementScroll = (targetPos, blinking) => {
+const elementScroll = (targetPos) => {
 	const elementTarget = document.querySelector(targetPos)
 	elementTarget.scrollIntoView({ behavior: "smooth" })
 }
 
 const blinkingBg = () => {
-	const oldPos = allComments[currentPosition]
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
+	const oldPos = allComments[currentPos]
 	oldPos.onanimationend = () => {
 		oldPos.classList.remove("BlinkBlink")
 	}
-	allComments[currentPosition].classList.add("BlinkBlink")
+	allComments[currentPos].classList.add("BlinkBlink")
 }
 
 const parentJump = () => {
-	if (
-		!allComments[currentPosition] ||
-		!allComments[currentPosition].querySelector(".parentlink")
-	) {
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+	let currentPos = currentPosition()
+
+	if (!allComments[currentPos] || !allComments[currentPos].querySelector(".parentlink")) {
 		return
 	}
 
-	let parentId = allComments[currentPosition]
+	let parentId = allComments[currentPos]
 		.querySelector(".parentlink > [onclick]")
 		.getAttribute("onclick")
 
@@ -149,11 +171,15 @@ const dict = new Map([
 	["KeyF", () => elementScroll(".content.newpost")], //* F letter
 	["Digit2", () => elementScroll(".article")], //* 2 letter scroll at the start of the article
 	["KeyX", () => elementScroll(".content.newpost")], //* F letter to the comment box */
-	["KeyP", ""], //* test button
+	["KeyP", () => "test"], //* test button
 ])
 
 document.addEventListener("keyup", (e) => {
+	const [allComments, commentsTotal, unreadComments, lastUnread] = initComments()
+
 	if (!commentsTotal) return
+
+	if (document.activeElement.tagName !== "BODY") return // Keys scripts doesnt run in textarea //!Change to textarea, form, input etc
 
 	for (const [key, value] of dict) {
 		if (e.code === key) {
@@ -162,5 +188,4 @@ document.addEventListener("keyup", (e) => {
 	}
 })
 
-loadCSS()
 initComments()
