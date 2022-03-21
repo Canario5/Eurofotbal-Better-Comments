@@ -179,7 +179,11 @@ document.addEventListener("keyup", (e) => {
 
 	if (!commentsTotal) return
 
-	if (document.activeElement.tagName !== "BODY") return // Keys scripts doesnt run in textarea //!Change to textarea, form, input etc
+	if (
+		document.activeElement.tagName === "TEXTAREA" ||
+		document.activeElement.tagName === "INPUT"
+	)
+		return // Key scripts doesnt run when typing text in text fields
 
 	for (const [key, value] of dict) {
 		if (e.code === key) {
