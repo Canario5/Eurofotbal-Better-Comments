@@ -57,7 +57,7 @@ _(Digit2 above letters; not num2 from a numeral part of a keyboard.)_
 
 ### How to install an unpacked Chrome Extension
 
-The best way is to follow the official [guide](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked) from Google.
+You can download this extension on [release page](https://github.com/Canario5/EfJumpComments/releases). Then unpack downloaded .zip archive and load extension manually into Chrome browser. The best way is to follow the official [guide](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked) from Google.
 
 ### Feedback from our users:
 
@@ -65,9 +65,9 @@ The best way is to follow the official [guide](https://developer.chrome.com/docs
 
 > `Naozaj múdry systém komentárov.` _Hudynho_
 
-> `Attention. My Dear:`
-> `Please reconfirm to me your full delivery address,`
-> `And your nearest airport to land, on this information below so that i`
-> `can deliver your Package worth $7.5 Million Dollar`
-> _Diplomat From Internationl Monetary Fund_
+> `Attention. My Dear:`  
+> `Please reconfirm to me your full delivery address,`  
+> `And your nearest airport to land, on this information below so that i`  
+> `can deliver your Package worth $7.5 Million Dollar`  
+> _Diplomat From Internationl Monetary Fund_  
 > _Mr. Adedayo Olubunmi_
