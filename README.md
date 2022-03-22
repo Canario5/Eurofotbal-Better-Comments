@@ -64,7 +64,7 @@ You can download this extension on [release page](https://github.com/Canario5/Ef
 
 > `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.` _T. G. Masaryk_
 
-> `Naozaj múdry systém komentárov.` _Hudynho_
+> `Naozaj múdry systém komentárov.` _Hudynho, EF discussion specialist_
 
 > `Attention. My Dear:`  
 > `Please reconfirm to me your full delivery address,`  
