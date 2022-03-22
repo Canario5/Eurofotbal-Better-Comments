@@ -4,28 +4,42 @@
 
 Under popular articles there can be over a thousand comments. This plugin seeks to improve the user experience by making it much faster and easier to navigate between comments. It has a variety of navigation options, like scrolling solely between new comments, or jump to the parent comment and much more. (Note that some functions are only available to logged-in users on the site.)
 
-![Eurofotbal.cz's typical discussion structure](docs/images/EFcz2.png)
+![](docs/images/EFcz2.png)
+
+###### Eurofotbal.cz's typical discussion structure
 
 ### Keys Q, A
 
 - Simple moving up or down between comments by one comment at the time.
 
 ```sh
-✨ From comment nr.5 will scroll to number four or six.
+✨ From comment number 5, you will scroll to number four or six.
 ```
 
 ### Keys W, S
 
 - Simply move five comments up or down at a time.
 
+```sh
+✨ From comment number 5, you will scroll to number four or six.
+```
+
 ### Keys E, D (only available to logged-in users)
 
 - Easily scrolling up and down through new comments only.
+
+```sh
+✨ From comment number 5, you will scroll to number four or six.
+```
 
 ### Keys R, F
 
 - R - The parent comment will be found by using this key.
 - F will skip back to the original comment.
+
+```sh
+✨ From comment number 5, you will scroll to number four or six.
+```
 
 ### Key Digit2
 
@@ -33,9 +47,17 @@ _(Digit2 above letters; not num2 from a numeral part of a keyboard.)_
 
 - Digit2 will scroll to the article headline
 
+```sh
+✨ From comment number 5, you will scroll to number four or six.
+```
+
 ### Key X (only available to logged-in users)
 
 - Scroll to the comment box at the bottom of the page and start writing a new comment.
+
+```sh
+✨ From comment number 5, you will scroll to number four or six.
+```
 
 ### How to install an unpacked Chrome Extension
 
