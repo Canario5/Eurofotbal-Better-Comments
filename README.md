@@ -4,6 +4,8 @@
 
 Under popular articles there can be over a thousand comments. This plugin seeks to improve the user experience by making it much faster and easier to navigate between comments. It has a variety of navigation options, like scrolling solely between new comments, or jump to the parent comment and much more. (Note that some functions are only available to logged-in users on the site.)
 
+![Eurofotbal.cz's typical discussion structure](docs/images/EFcz2.png)
+
 ### Keys Q, A
 
 - Simple moving up or down between comments by one comment at the time.
@@ -41,12 +43,8 @@ The best way is to follow the official [guide](https://developer.chrome.com/docs
 
 #### Feedback from our users:
 
-> `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.`
-> _T. G. Masaryk_
+> `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.` > _T. G. Masaryk_
 
-> `Naozaj múdry systém komentárov.`
-> _Hudynho_
+> `Naozaj múdry systém komentárov.` > _Hudynho_
 
-> `Attention. My Dear:` > `Please reconfirm to me your full delivery address,` > `And your nearest airport to land, on this information below so that i` > `can deliver your Package worth $7.5 Million Dollar`
-> _Diplomat From Internationl Monetary Fund_
-> _Mr. Adedayo Olubunmi_
+> `Attention. My Dear:` > `Please reconfirm to me your full delivery address,` > `And your nearest airport to land, on this information below so that i` > `can deliver your Package worth $7.5 Million Dollar` > _Diplomat From Internationl Monetary Fund_ > _Mr. Adedayo Olubunmi_
