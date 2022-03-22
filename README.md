@@ -18,10 +18,10 @@ Under popular articles there can be over a thousand comments. This plugin seeks 
 
 ### Keys W, S
 
-- Simply move five comments up or down at a time.
+- Jump five comments up or down at a time.
 
 ```sh
-✨ From comment number 5, you will scroll to number four or six.
+✨ From comment number 5, you will scroll to number zero or ten.
 ```
 
 ### Keys E, D (only available to logged-in users)
@@ -29,16 +29,16 @@ Under popular articles there can be over a thousand comments. This plugin seeks 
 - Easily scrolling up and down through new comments only.
 
 ```sh
-✨ From comment number 5, you will scroll to number four or six.
+✨ You will scroll between numbers three, four, and nine.
 ```
 
 ### Keys R, F
 
-- R - The parent comment will be found by using this key.
+- The parent comment will be found by using R key.
 - F will skip back to the original comment.
 
 ```sh
-✨ From comment number 5, you will scroll to number four or six.
+✨ From comments 2, 3, and 4, you\'ll come to number two. The F key will take you back to the original comment where you were when you jumped to the parent.
 ```
 
 ### Key Digit2
@@ -48,22 +48,18 @@ _(Digit2 above letters; not num2 from a numeral part of a keyboard.)_
 - Digit2 will scroll to the article headline
 
 ```sh
-✨ From comment number 5, you will scroll to number four or six.
+✨ Its pretty self-explanatory.
 ```
 
 ### Key X (only available to logged-in users)
 
 - Scroll to the comment box at the bottom of the page and start writing a new comment.
 
-```sh
-✨ From comment number 5, you will scroll to number four or six.
-```
-
 ### How to install an unpacked Chrome Extension
 
 The best way is to follow the official [guide](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked) from Google.
 
-#### Feedback from our users:
+### Feedback from our users:
 
 > `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.` > _T. G. Masaryk_
 
