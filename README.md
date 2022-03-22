@@ -49,12 +49,16 @@ _(Digit2 above letters; not num2 from a numeral part of a keyboard.)_
 - Digit2 will scroll to the article headline
 
 ```sh
-✨ Its pretty self-explanatory.
+ℹ️ Its pretty self-explanatory.
 ```
 
 ### Key X (only available to logged-in users)
 
 - Scroll to the comment box at the bottom of the page and start writing a new comment.
+
+```sh
+ℹ️ The button is inactive for users who are not logged in because there is no textarea for them.
+```
 
 ### How to install an unpacked Chrome Extension
 
