@@ -38,7 +38,7 @@ Under popular articles there can be over a thousand comments. This plugin seeks 
 - F will skip back to the original comment.
 
 ```sh
-✨ From comments 2, 3, and 4, you\'ll come to number two. The F key will take you back to the original comment where you were when you jumped to the parent.
+✨ From comments 2, 3, and 4, you will come to number two. The F key will take you back to the original comment where you were when you jumped to the parent.
 ```
 
 ### Key Digit2
@@ -61,8 +61,13 @@ The best way is to follow the official [guide](https://developer.chrome.com/docs
 
 ### Feedback from our users:
 
-> `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.` > _T. G. Masaryk_
+> `Bez tohoto rozšíření si diskuzi o Gambrinus lize už ani nedovedu představit.` _T. G. Masaryk_
 
-> `Naozaj múdry systém komentárov.` > _Hudynho_
+> `Naozaj múdry systém komentárov.` _Hudynho_
 
-> `Attention. My Dear:` > `Please reconfirm to me your full delivery address,` > `And your nearest airport to land, on this information below so that i` > `can deliver your Package worth $7.5 Million Dollar` > _Diplomat From Internationl Monetary Fund_ > _Mr. Adedayo Olubunmi_
+> `Attention. My Dear:`
+> `Please reconfirm to me your full delivery address,`
+> `And your nearest airport to land, on this information below so that i`
+> `can deliver your Package worth $7.5 Million Dollar`
+> _Diplomat From Internationl Monetary Fund_
+> _Mr. Adedayo Olubunmi_
