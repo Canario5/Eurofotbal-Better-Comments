@@ -78,7 +78,7 @@ const miniScroll = (position, blinking) => {
 
 	if (blinking) blinkingBg()
 
-	console.log(`CurrentPosition is ${currentPos}`)
+	/* console.log(`CurrentPosition is ${currentPos}`) */
 	allComments[currentPos].scrollIntoView({ behavior: "smooth" })
 }
 
@@ -196,6 +196,7 @@ const backToChild = (parentPos, childPos) => {
 
 const elementScroll = (targetPos) => {
 	const elementTarget = document.querySelector(targetPos)
+	if (!(elementTarget instanceof Element)) return // if not valid active node, return
 	elementTarget.scrollIntoView({ behavior: "smooth" })
 }
 
