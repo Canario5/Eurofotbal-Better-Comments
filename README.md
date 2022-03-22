@@ -6,7 +6,7 @@ Under popular articles there can be over a thousand comments. This plugin seeks 
 
 ![](docs/images/EFcz2.png)
 
-###### Eurofotbal.cz's typical discussion structure
+###### Eurofotbal.cz's typical discussion structure (old comments white, colored comments new; only logged user)
 
 ### Keys Q, A
 
