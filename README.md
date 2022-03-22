@@ -38,7 +38,7 @@ Under popular articles there can be over a thousand comments. This plugin seeks 
 - F will skip back to the original comment.
 
 ```sh
-✨ From comments 2, 3, and 4, you will come to number two.
+✨ From comments 2, 3, and 4, you will come to number one.
 The F key will take you back to the original comment where you were when you jumped to the parent.
 ```
 
