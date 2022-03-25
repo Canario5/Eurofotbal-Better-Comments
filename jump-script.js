@@ -13,6 +13,7 @@ const initComments = () => {
 	if (initComments.value && initComments.value.length > 0) return initComments.value
 
 	const allComments = document.querySelectorAll(".post")
+
 	const commentsTotal = allComments.length
 	const unreadComments = []
 	for (let i = 0; i < commentsTotal; i++)
@@ -23,18 +24,17 @@ const initComments = () => {
 	const lastUnread = unreadComments[unreadComments.length - 1]
 
 	initComments.value = allComments
-	let currentPos = currentPosition()
 
 	//* Keys section
 	const dict = new Map([
-		["KeyQ", () => posChange(-1, commentsTotal)], //* Q letter "UP +1" comment
-		["KeyA", () => posChange(1, commentsTotal)], //* A letter "DOWN +1" comment
-		["KeyW", () => posChange(-5, commentsTotal)], //* W letter "UP +5" comments
-		["KeyS", () => posChange(5, commentsTotal)], //* S letter "DOWN +5" comments
-		["KeyE", () => unreadPrev(unreadComments, lastUnread)], //* E letter "previous unread" comment
-		["KeyD", () => unreadNext(unreadComments, lastUnread)], //* D letter "next unread" comment
-		["KeyR", () => parentJump(allComments)], //* R letter
-		["KeyF", () => backToChild()], //* F letter
+		["KeyQ", () => posChange(-1, currentPos, commentsTotal)], //* Q letter "UP +1" comment
+		["KeyA", () => posChange(1, currentPos, commentsTotal)], //* A letter "DOWN +1" comment
+		["KeyW", () => posChange(-5, currentPos, commentsTotal)], //* W letter "UP +5" comments
+		["KeyS", () => posChange(5, currentPos, commentsTotal)], //* S letter "DOWN +5" comments
+		["KeyE", () => unreadPrev(currentPos, unreadComments, lastUnread)], //* E letter "previous unread" comment
+		["KeyD", () => unreadNext(currentPos, unreadComments, lastUnread)], //* D letter "next unread" comment
+		["KeyR", () => parentJump(currentPos, allComments)], //* R letter
+		["KeyF", () => backToChild(currentPos)], //* F letter
 		["Digit2", () => elementScroll(".article")], //* 2 letter scroll at the start of the article
 		["KeyX", () => elementScroll(".content.newpost")], //* F letter to the comment box */
 		/* ["KeyP", () => console.log("test")], // test button */
@@ -44,12 +44,10 @@ const initComments = () => {
 		if (!commentsTotal) return
 
 		// Key scripts doesnt run when typing text in text fields
-		if (
-			document.activeElement.tagName === "TEXTAREA" ||
-			document.activeElement.tagName === "INPUT"
-		) {
-			return
-		}
+		const elementTag = document.activeElement.tagName
+		if (elementTag === "TEXTAREA" || elementTag === "INPUT") return
+
+		currentPos = currentPosition()
 
 		for (const [key, value] of dict) {
 			if (e.code === key) {
@@ -93,8 +91,7 @@ const blinkingBg = () => {
 	allComments[currentPos].classList.add("BlinkBlink")
 }
 
-const posChange = (jumpSize, commentsTotal) => {
-	let currentPos = currentPosition()
+const posChange = (jumpSize, currentPos, commentsTotal) => {
 	if (currentPos === "") return miniScroll(0)
 
 	// Negative jumpSize; Previous, climbing to the top -> comments
@@ -109,8 +106,7 @@ const posChange = (jumpSize, commentsTotal) => {
 	if (jumpSize > 0 && currentPos < commentsTotal - 1) return miniScroll(currentPos + jumpSize)
 }
 
-const unreadPrev = (unreadComments, lastUnread) => {
-	let currentPos = currentPosition()
+const unreadPrev = (currentPos, unreadComments, lastUnread) => {
 	switch (true) {
 		case currentPos === "" && unreadComments && unreadComments.length > 0:
 			/* return miniScroll(lastUnread) */
@@ -132,8 +128,7 @@ const unreadPrev = (unreadComments, lastUnread) => {
 	blinkingBg()
 }
 
-const unreadNext = (unreadComments, lastUnread) => {
-	let currentPos = currentPosition()
+const unreadNext = (currentPos, unreadComments, lastUnread) => {
 	switch (true) {
 		case currentPos === "" && unreadComments && unreadComments.length > 0:
 			return miniScroll(unreadComments[0])
@@ -161,8 +156,7 @@ const jumpScroll = (nextUnread, currentPos, unreadComments) => {
 	}
 }
 
-const parentJump = (allComments) => {
-	let currentPos = currentPosition()
+const parentJump = (currentPos, allComments) => {
 	if (!allComments[currentPos] || !allComments[currentPos].querySelector(".parentlink")) {
 		return
 	}
@@ -184,7 +178,6 @@ const parentJump = (allComments) => {
 }
 
 const backToChild = (parentPos, childPos) => {
-	let currentPos = currentPosition()
 	if ((parentPos || parentPos === 0) && typeof parentPos === "number") {
 		backToChild.parentPos = parentPos
 		backToChild.childPos = childPos
