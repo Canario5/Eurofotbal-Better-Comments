@@ -8,13 +8,22 @@
 	"content_scripts": [
 		{
 			"matches": ["https://*.eurofotbal.cz/*"],
-			"js": ["jump-script.js"]
+			"js": ["Load-files.js"]
 		}
 	],
 
 	"web_accessible_resources": [
 		{
-			"resources": ["JumpComments.css"],
+			"resources": [
+				"JumpComments.css",
+				"/scripts/mainScript.js",
+				"/scripts/unreadJumps.js",
+				"/scripts/currentPosition.js",
+				"/scripts/blinkingBg.js",
+				"/scripts/posChange.js",
+				"/scripts/parentChildJump.js",
+				"/scripts/miniScroll.js"
+			],
 			"matches": ["*://*.eurofotbal.cz/*"]
 		}
 	],
