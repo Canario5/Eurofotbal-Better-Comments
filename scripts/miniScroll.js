@@ -10,6 +10,6 @@ const miniScroll = (position) => {
 
 	const { allComments } = initComments()
 
-	console.log(`CurrentPosition is ${position}`)
+	/* console.log(`CurrentPosition is ${position}`) */
 	allComments[position].scrollIntoView({ behavior: "smooth" })
 }
