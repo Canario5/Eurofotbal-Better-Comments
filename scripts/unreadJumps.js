@@ -1,10 +1,11 @@
+import { initComments } from "/scripts/initComments.js"
 import { miniScroll } from "/scripts/miniScroll.js"
 import { blinkingBg } from "/scripts/blinkingBg.js"
 
 export { unreadJump }
 
-const unreadJump = (jumpDirection, currentPos, unreadPositions) => {
-	const lastUnreadPos = unreadPositions[unreadPositions.length - 1]
+const unreadJump = (jumpDirection, currentPos) => {
+	const { unreadPositions, lastUnreadPos } = initComments()
 
 	switch (true) {
 		case currentPos === "" && unreadPositions && unreadPositions.length > 0:

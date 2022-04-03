@@ -22,7 +22,8 @@
 				"/scripts/blinkingBg.js",
 				"/scripts/posChange.js",
 				"/scripts/parentChildJump.js",
-				"/scripts/miniScroll.js"
+				"/scripts/miniScroll.js",
+				"/scripts/initComments.js"
 			],
 			"matches": ["*://*.eurofotbal.cz/*"]
 		}

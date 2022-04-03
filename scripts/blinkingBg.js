@@ -1,10 +1,10 @@
-import { initComments } from "/scripts/mainScript.js"
+import { initComments } from "/scripts/initComments.js"
 import { currentPosition } from "/scripts/currentPosition.js"
 
 export { blinkingBg }
 
 const blinkingBg = () => {
-	const allComments = initComments()
+	const { allComments } = initComments()
 	const currentPos = currentPosition()
 
 	const oldPos = allComments[currentPos]

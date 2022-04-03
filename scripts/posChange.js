@@ -1,9 +1,11 @@
+import { initComments } from "/scripts/initComments.js"
 import { miniScroll } from "/scripts/miniScroll.js"
 import { blinkingBg } from "/scripts/blinkingBg.js"
 
 export { posChange }
 
-const posChange = (jumpSize, currentPos, commentsTotal) => {
+const posChange = (jumpSize, currentPos) => {
+	const { commentsTotal } = initComments()
 	if (currentPos === "") return miniScroll(0)
 
 	// Negative jumpSize; Previous, climbing to the top -> comments

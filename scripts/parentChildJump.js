@@ -1,8 +1,10 @@
+import { initComments } from "/scripts/initComments.js"
 import { miniScroll } from "/scripts/miniScroll.js"
 
 export { parentJump, backToChild }
 
-const parentJump = (currentPos, allComments) => {
+const parentJump = (currentPos) => {
+	const { allComments } = initComments()
 	if (!allComments[currentPos] || !allComments[currentPos].querySelector(".parentlink")) {
 		return
 	}
@@ -11,7 +13,7 @@ const parentJump = (currentPos, allComments) => {
 		.querySelector(".parentlink > [onclick]")
 		.getAttribute("onclick")
 
-	parentId = parentId.replace(/(\D+)/g, "") // Remove everything except numbers
+	parentId = parentId.replace(/(\D+)/g, "") // Removing everything except numbers
 	parentId = "p" + parentId
 
 	for (let i = 0; i < allComments.length; i++) {
@@ -24,7 +26,7 @@ const parentJump = (currentPos, allComments) => {
 }
 
 const backToChild = (currentPos, childPos) => {
-	if ((currentPos || currentPos === 0) && typeof currentPos === "number" && childPos) {
+	if (childPos && typeof childPos === "number") {
 		backToChild.parentPos = currentPos
 		backToChild.childPos = childPos
 		return

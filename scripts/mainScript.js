@@ -1,38 +1,26 @@
-import { unreadJump } from "/scripts/unreadJumps.js"
+import { initComments } from "/scripts/initComments.js"
 import { posChange } from "/scripts/posChange.js"
+import { unreadJump } from "/scripts/unreadJumps.js"
 import { parentJump, backToChild } from "/scripts/parentChildJump.js"
 import { currentPosition } from "/scripts/currentPosition.js"
 
-export { initComments }
-
-const initComments = () => {
-	if (initComments.value && initComments.value.length > 0) return initComments.value
-
+const mainScript = () => {
 	let currentPos
-	const allComments = document.querySelectorAll(".post")
-	const commentsTotal = allComments.length
-
-	const unreadPositions = []
-	for (let i = 0; i < commentsTotal; i++)
-		if (allComments[i].className.includes("unread")) {
-			unreadPositions.push(i)
-		}
-
-	initComments.value = allComments
-
+	const { commentsTotal } = initComments()
 	const nextUnread = true
 	const previousUnread = false
+
 	const dict = new Map([
-		["KeyQ", () => posChange(-1, currentPos, commentsTotal)], //* "UP +1" comment
-		["KeyA", () => posChange(1, currentPos, commentsTotal)], //* "DOWN +1" comment
-		["KeyW", () => posChange(-5, currentPos, commentsTotal)], //* "UP +5" comments
-		["KeyS", () => posChange(5, currentPos, commentsTotal)], //* "DOWN +5" comments
-		["KeyE", () => unreadJump(previousUnread, currentPos, unreadPositions)], //* "previous unread" comment
-		["KeyD", () => unreadJump(nextUnread, currentPos, unreadPositions)], //* "next unread" comment
-		["KeyR", () => parentJump(currentPos, allComments)], //* R letter
+		["KeyQ", () => posChange(-1, currentPos)], //* "UP +1" comment
+		["KeyA", () => posChange(1, currentPos)], //* "DOWN +1" comment
+		["KeyW", () => posChange(-5, currentPos)], //* "UP +5" comments
+		["KeyS", () => posChange(5, currentPos)], //* "DOWN +5" comments
+		["KeyE", () => unreadJump(previousUnread, currentPos)], //* "previous unread" comment
+		["KeyD", () => unreadJump(nextUnread, currentPos)], //* "next unread" comment
+		["KeyR", () => parentJump(currentPos)], //* R letter
 		["KeyF", () => backToChild(currentPos)], //* F letter
 		["Digit2", () => elementScroll(".article")], //* nr2 letter; scroll at the start of the article
-		["KeyX", () => elementScroll(".content.newpost")], //* to the comment box */
+		["KeyX", () => elementScroll(".content.newpost")], //* to the comment box, only logged in users */
 		/* ["KeyP", () => console.log("test")], // test button */
 	])
 
@@ -59,4 +47,4 @@ const elementScroll = (targetPos) => {
 	elementTarget.scrollIntoView({ behavior: "smooth" })
 }
 
-initComments()
+mainScript()
