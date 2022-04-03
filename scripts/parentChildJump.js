@@ -16,13 +16,14 @@ const parentJump = (currentPos) => {
 	parentId = parentId.replace(/(\D+)/g, "") // Removing everything except numbers
 	parentId = "p" + parentId
 
-	for (let i = 0; i < allComments.length; i++) {
-		if (allComments[i].id === parentId) {
+	const parentComment = [...allComments].find((comment, i) => {
+		if (comment.id === parentId) {
 			const position = currentPos - (currentPos - i)
 			backToChild(position, currentPos)
-			return miniScroll(position)
+			miniScroll(position)
+			return true //! NOTE: for later
 		}
-	}
+	})
 }
 
 const backToChild = (currentPos, childPos) => {
