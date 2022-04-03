@@ -1,7 +1,8 @@
 export { initComments }
 
 const initComments = () => {
-	if (initComments.value && initComments.value.length > 0) return initComments.value
+	if (initComments.value && Object.keys(initComments.value).length > 0)
+		return initComments.value
 
 	const allComments = document.querySelectorAll(".post")
 	const commentsTotal = allComments.length
