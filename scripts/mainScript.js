@@ -1,7 +1,7 @@
 import { initComments } from "/scripts/initComments.js"
 import { posChange } from "/scripts/posChange.js"
 import { unreadJump } from "/scripts/unreadJumps.js"
-import { parentJump, backToChild } from "/scripts/parentChildJump.js"
+import { parentJump, backToChild } from "/scripts/parentChildJumps.js"
 import { currentPosition } from "/scripts/currentPosition.js"
 
 const mainScript = () => {

@@ -21,7 +21,7 @@
 				"/scripts/currentPosition.js",
 				"/scripts/blinkingBg.js",
 				"/scripts/posChange.js",
-				"/scripts/parentChildJump.js",
+				"/scripts/parentChildJumps.js",
 				"/scripts/miniScroll.js",
 				"/scripts/initComments.js"
 			],
