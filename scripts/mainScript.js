@@ -17,10 +17,10 @@ const mainScript = () => {
 		["KeyS", () => posChange(5, currentPos)], //* "DOWN +5" comments
 		["KeyE", () => unreadJump(previousUnread, currentPos)], //* "previous unread" comment
 		["KeyD", () => unreadJump(nextUnread, currentPos)], //* "next unread" comment
-		["KeyR", () => parentJump(currentPos)], //* R letter
-		["KeyF", () => backToChild(currentPos)], //* F letter
-		["Digit2", () => elementScroll(".article")], //* nr2 letter; scroll at the start of the article
-		["KeyX", () => elementScroll(".content.newpost")], //* to the comment box, only logged in users */
+		["KeyR", () => parentJump(currentPos)], //* Jump to the parent comment
+		["KeyF", () => backToChild(currentPos)], //* Jump back to original child comment
+		["Digit2", () => elementScroll(".article")], //* Digit2 above letters (not from num. part of keyboard); scroll at the article
+		["KeyX", () => elementScroll(".content.newpost")], //* to the comment box at the bottom */
 		/* ["KeyP", () => console.log("test")], // test button */
 	])
 
